@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 var theme = ThemeData(
-  bottomAppBarTheme: BottomAppBarTheme(
-    color: Colors.white,
-    elevation: 1,
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: Colors.black,
   ),
   // textButtonTheme: TextButtonThemeData(
   //   style: TextButton.styleFrom(
