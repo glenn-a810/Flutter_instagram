@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:instagram/contents.dart';
 import 'package:instagram/style.dart' as style;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(MaterialApp(
@@ -20,6 +22,23 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int tab = 0;
+  var resData;
+
+  getData() async {
+    var result = await http
+        .get(Uri.parse('https://codingapple1.github.io/app/data.json'));
+    var res = jsonDecode(result.body);
+    setState(() {
+      resData = res;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +50,14 @@ class _MyAppState extends State<MyApp> {
         actions: [
           IconButton(
             icon: Icon(Icons.add_box_outlined),
-            onPressed: () {},
+            onPressed: () {
+              print(resData);
+            },
             iconSize: 30,
           ),
         ],
       ),
-      body: [Home(), Text('SHOP')][tab],
+      body: [Home(resData), Text('SHOP')][tab],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -77,7 +98,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  Home(this.resData, {Key? key}) : super(key: key);
+  final resData;
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +109,10 @@ class Home extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network('https://codingapple1.github.io/app/car0.png'),
-            Text('좋아요 100'),
-            Text('글쓴이'),
-            Text('글내용'),
+            Image.network(resData[i]['image']),
+            Text('좋아요 ' + resData[i]['likes'].toString()),
+            Text(resData[i]['user']),
+            Text(resData[i]['content']),
           ],
         );
       },
