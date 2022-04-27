@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int tab = 0;
-  var resData;
+  var resData = [];
 
   getData() async {
     var result = await http
@@ -57,7 +57,13 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
       ),
-      body: [Home(resData), Text('SHOP')][tab],
+      body: [
+        Home(
+          resData: resData,
+        ),
+        Text('SHOP')
+      ][tab],
+      // body: [FutureBuilder(future: resData, builder: () { 데이터 한번 가져오는 경우에 사용 }), Text('SHOP')][tab],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -98,24 +104,28 @@ class _MyAppState extends State<MyApp> {
 }
 
 class Home extends StatelessWidget {
-  Home(this.resData, {Key? key}) : super(key: key);
+  Home({this.resData, Key? key}) : super(key: key);
   final resData;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 3,
-      itemBuilder: (context, i) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(resData[i]['image']),
-            Text('좋아요 ' + resData[i]['likes'].toString()),
-            Text(resData[i]['user']),
-            Text(resData[i]['content']),
-          ],
-        );
-      },
-    );
+    if (resData.isNotEmpty) {
+      return ListView.builder(
+        itemCount: 3,
+        itemBuilder: (context, i) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(resData[i]['image']),
+              Text('좋아요 ' + resData[i]['likes'].toString()),
+              Text(resData[i]['user']),
+              Text(resData[i]['content']),
+            ],
+          );
+        },
+      );
+    } else {
+      return Text('Loding...');
+    }
   }
 }
