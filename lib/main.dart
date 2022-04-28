@@ -22,12 +22,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int tab = 0;
-  var resData = [];
+  List resData = [];
+
+  addData(more) {
+    setState(() {
+      resData.add(more);
+    });
+  }
 
   getData() async {
     var result = await http
         .get(Uri.parse('https://codingapple1.github.io/app/data.json'));
-    var res = jsonDecode(result.body);
+    List res = jsonDecode(result.body);
     setState(() {
       resData = res;
     });
@@ -60,6 +66,7 @@ class _MyAppState extends State<MyApp> {
       body: [
         Home(
           resData: resData,
+          addData: addData,
         ),
         Text('SHOP')
       ][tab],
@@ -103,23 +110,51 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class Home extends StatelessWidget {
-  Home({this.resData, Key? key}) : super(key: key);
-  final resData;
+class Home extends StatefulWidget {
+  Home({this.resData, this.addData, Key? key}) : super(key: key);
+  late final resData;
+  final addData;
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  var scroll = ScrollController();
+
+  getMore() async {
+    var moreResult = await http
+        .get(Uri.parse('https://codingapple1.github.io/app/more1.json'));
+    var moreRes = jsonDecode(moreResult.body);
+    widget.addData(moreRes);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scroll.addListener(() async {
+      // print(scroll.position.pixels);
+      if (scroll.position.pixels == scroll.position.maxScrollExtent) {
+        getMore();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (resData.isNotEmpty) {
+    if (widget.resData.isNotEmpty) {
       return ListView.builder(
-        itemCount: 3,
+        itemCount: widget.resData.length,
+        controller: scroll,
         itemBuilder: (context, i) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(resData[i]['image']),
-              Text('좋아요 ' + resData[i]['likes'].toString()),
-              Text(resData[i]['user']),
-              Text(resData[i]['content']),
+              Image.network(widget.resData[i]['image']),
+              Text('좋아요 ' + widget.resData[i]['likes'].toString()),
+              Text(widget.resData[i]['user']),
+              Text(widget.resData[i]['content']),
             ],
           );
         },
