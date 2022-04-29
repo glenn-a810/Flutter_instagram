@@ -7,6 +7,11 @@ import 'dart:convert';
 void main() {
   runApp(MaterialApp(
     theme: style.theme,
+    // initialRoute: '/',
+    // routes: {
+    //   '/': (c) => Text('HOME'),
+    //   '/detail': (c) => Text('SHOP'),
+    // },
     home: MyApp(),
   ));
 }
@@ -57,7 +62,8 @@ class _MyAppState extends State<MyApp> {
           IconButton(
             icon: Icon(Icons.add_box_outlined),
             onPressed: () {
-              print(resData);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Upload()));
             },
             iconSize: 30,
           ),
@@ -106,6 +112,28 @@ class _MyAppState extends State<MyApp> {
       //     ),
       //   ),
       // ),
+    );
+  }
+}
+
+class Upload extends StatelessWidget {
+  const Upload({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Upload'),
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.close)),
+        ],
+      ),
     );
   }
 }
