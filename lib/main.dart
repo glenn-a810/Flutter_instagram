@@ -31,6 +31,26 @@ class _MyAppState extends State<MyApp> {
   int tab = 0;
   List resData = [];
   var userImage;
+  var userContent;
+
+  addUserData() {
+    var userData = {
+      'id': resData.length,
+      'image': userImage,
+      'like': 5,
+      'date': 'July 25',
+      'content': userContent,
+      'liked': false,
+      'user': '루이',
+    };
+    setState(() {
+      resData.insert(0, userData);
+    });
+  }
+
+  setUserContent(a) {
+    userContent = a;
+  }
 
   addData(more) {
     setState(() {
@@ -78,6 +98,8 @@ class _MyAppState extends State<MyApp> {
                   MaterialPageRoute(
                       builder: (context) => Upload(
                             userImage: userImage,
+                            setUserContent: setUserContent,
+                            addUserData: addUserData,
                           )));
             },
             iconSize: 30,
@@ -132,8 +154,12 @@ class _MyAppState extends State<MyApp> {
 }
 
 class Upload extends StatelessWidget {
-  const Upload({Key? key, this.userImage}) : super(key: key);
+  const Upload(
+      {Key? key, this.userImage, this.setUserContent, this.addUserData})
+      : super(key: key);
   final userImage;
+  final setUserContent;
+  final addUserData;
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +168,10 @@ class Upload extends StatelessWidget {
         title: Text('Upload'),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.check),
+            onPressed: () {
+              addUserData();
+            },
+            icon: Icon(Icons.send),
           ),
         ],
       ),
@@ -152,7 +180,11 @@ class Upload extends StatelessWidget {
         children: [
           Image.file(userImage),
           // Text('Upload'),
-          TextField(),
+          TextField(
+            onChanged: (text) {
+              setUserContent(text);
+            },
+          ),
           IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -205,7 +237,10 @@ class _HomeState extends State<Home> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(widget.resData[i]['image']),
+              widget.resData[i]['image'].runtimeType == String
+                  ? Image.network(widget.resData[i]['image'])
+                  : Image.file(widget.resData[i]['image']),
+              // Image.network(widget.resData[i]['image']),
               Text('좋아요 ' + widget.resData[i]['likes'].toString()),
               Text(widget.resData[i]['user']),
               Text(widget.resData[i]['content']),
