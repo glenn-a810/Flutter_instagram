@@ -261,23 +261,25 @@ class _HomeState extends State<Home> {
                 child: Text(widget.resData[i]['user']),
                 onTap: () {
                   Navigator.push(
-                      context,
-                      // CupertinoPageRoute(builder: (c) => Profile()),
-                      PageRouteBuilder(
-                        pageBuilder: (context, a1, a2) => Profile(),
-                        transitionsBuilder: (context, a1, a2, child) =>
-                            SlideTransition(
-                          position: Tween(
-                            begin: Offset(-1.0, 0.0),
-                            end: Offset(0.0, 0.0),
-                          ).animate(a1),
-                          child: child,
-                        ),
-                        //     FadeTransition(
-                        //         opacity: a1, child: child), // animation widget
-                        // transitionDuration:
-                        //     Duration(milliseconds: 500), // animation 속도
-                      ));
+                    context,
+                    MaterialPageRoute(builder: (c) => Profile()),
+                    // CupertinoPageRoute(builder: (c) => Profile()),
+                    // PageRouteBuilder(
+                    //   pageBuilder: (context, a1, a2) => Profile(),
+                    //   transitionsBuilder: (context, a1, a2, child) =>
+                    //       SlideTransition(
+                    //     position: Tween(
+                    //       begin: Offset(-1.0, 0.0),
+                    //       end: Offset(0.0, 0.0),
+                    //     ).animate(a1),
+                    //     child: child,
+                    //   ),
+                    //   //     FadeTransition(
+                    //   //         opacity: a1, child: child), // animation widget
+                    //   // transitionDuration:
+                    //   //     Duration(milliseconds: 500), // animation 속도
+                    // )
+                  );
                 },
               ),
               Text('좋아요 ' + widget.resData[i]['likes'].toString()),
