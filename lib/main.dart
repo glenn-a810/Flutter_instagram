@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:instagram/contents.dart';
 import 'package:instagram/style.dart' as style;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,11 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   runApp(MaterialApp(
     theme: style.theme,
-    // initialRoute: '/',
-    // routes: {
-    //   '/': (c) => Text('HOME'),
-    //   '/detail': (c) => Text('SHOP'),
-    // },
     home: MyApp(),
   ));
 }
@@ -39,13 +33,6 @@ class _MyAppState extends State<MyApp> {
   saveData() async {
     var storage = await SharedPreferences.getInstance();
     storage.setString('name', 'Odd');
-    // storage.getString('name');
-    // storage.remove('name');
-
-    // var map = {'age': 20};
-    // storage.setString('map', jsonEncode(map)); // map형식 자료 저장
-    // storage.getString('map');
-    // print(jsonDecode(source));
   }
 
   addUserData() {
@@ -129,7 +116,6 @@ class _MyAppState extends State<MyApp> {
         ),
         Text('SHOP')
       ][tab],
-      // body: [FutureBuilder(future: resData, builder: () { 데이터 한번 가져오는 경우에 사용 }), Text('SHOP')][tab],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -149,22 +135,6 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
       ),
-      // BottomAppBar(
-      //   child: SizedBox(
-      //     height: 50,
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //       children: [
-      //         Icon(
-      //           Icons.home_outlined,
-      //         ),
-      //         Icon(
-      //           Icons.shopping_bag_outlined,
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
@@ -236,7 +206,6 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     scroll.addListener(() async {
-      // print(scroll.position.pixels);
       if (scroll.position.pixels == scroll.position.maxScrollExtent) {
         getMore();
       }
@@ -256,29 +225,12 @@ class _HomeState extends State<Home> {
               widget.resData[i]['image'].runtimeType == String
                   ? Image.network(widget.resData[i]['image'])
                   : Image.file(widget.resData[i]['image']),
-              // Image.network(widget.resData[i]['image']),
               GestureDetector(
                 child: Text(widget.resData[i]['user']),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (c) => Profile()),
-                    // CupertinoPageRoute(builder: (c) => Profile()),
-                    // PageRouteBuilder(
-                    //   pageBuilder: (context, a1, a2) => Profile(),
-                    //   transitionsBuilder: (context, a1, a2, child) =>
-                    //       SlideTransition(
-                    //     position: Tween(
-                    //       begin: Offset(-1.0, 0.0),
-                    //       end: Offset(0.0, 0.0),
-                    //     ).animate(a1),
-                    //     child: child,
-                    //   ),
-                    //   //     FadeTransition(
-                    //   //         opacity: a1, child: child), // animation widget
-                    //   // transitionDuration:
-                    //   //     Duration(milliseconds: 500), // animation 속도
-                    // )
                   );
                 },
               ),

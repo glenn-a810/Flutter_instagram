@@ -4,11 +4,6 @@ var theme = ThemeData(
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: Colors.black,
   ),
-  // textButtonTheme: TextButtonThemeData(
-  //   style: TextButton.styleFrom(
-  //     backgroundColor: Colors.red,
-  //   ),
-  // ),
   appBarTheme: AppBarTheme(
     color: Colors.white,
     elevation: 1,
