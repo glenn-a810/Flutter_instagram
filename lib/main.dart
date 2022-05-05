@@ -5,13 +5,16 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MaterialApp(
-    theme: style.theme,
-    home: MyApp(),
+  runApp(ChangeNotifierProvider(
+    create: (c) => storeData(),
+    child: MaterialApp(
+      theme: style.theme,
+      home: MyApp(),
+    ),
   ));
 }
 
@@ -247,14 +250,58 @@ class _HomeState extends State<Home> {
   }
 }
 
+// Store
+class storeData extends ChangeNotifier {
+  var name = 'John Kim';
+  var follower = 0;
+  var followState = true;
+
+  changeFollower() {
+    if (followState == true) {
+      follower++;
+      followState = false;
+    } else {
+      follower = 0;
+      followState = true;
+    }
+    notifyListeners();
+  }
+
+  changeName() {
+    name = 'John Park';
+    notifyListeners();
+  }
+}
+
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Text('Profile Page'),
+      appBar: AppBar(
+        title: Text(context.watch<storeData>().name),
+      ),
+      body: ListTile(
+        leading: Icon(Icons.account_circle_outlined),
+        title: Text(
+            '팔로워 ' + context.watch<storeData>().follower.toString() + ' 명'),
+        trailing: ElevatedButton(
+          onPressed: () {
+            context.read<storeData>().changeFollower();
+          },
+          child: Text('팔로잉'),
+        ),
+      ),
+      // Column(
+      //   children: [
+      //     ElevatedButton(
+      //         onPressed: () {
+      //           context.read<storeData>().changeName();
+      //         },
+      //         child: Text('Name Change'))
+      //   ],
+      // ),
     );
   }
 }
