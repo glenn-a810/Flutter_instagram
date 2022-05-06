@@ -9,8 +9,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-    create: (c) => storeData(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (c) => storeData()),
+      ChangeNotifierProvider(create: (c) => anotherData()),
+    ],
+    // create: (c) => storeData(),
     child: MaterialApp(
       theme: style.theme,
       home: MyApp(),
@@ -250,11 +254,25 @@ class _HomeState extends State<Home> {
   }
 }
 
+// another Store
+class anotherData extends ChangeNotifier {
+  var name = 'John Kim';
+}
+
 // Store
 class storeData extends ChangeNotifier {
-  var name = 'John Kim';
+  // var name = 'John Kim';
   var follower = 0;
   var followState = true;
+  var profileImage = [];
+
+  getData() async {
+    var res = await http
+        .get(Uri.parse('https://codingapple1.github.io/app/profile.json'));
+    var resData = jsonDecode(res.body);
+    profileImage = resData;
+    notifyListeners();
+  }
 
   changeFollower() {
     if (followState == true) {
@@ -268,7 +286,7 @@ class storeData extends ChangeNotifier {
   }
 
   changeName() {
-    name = 'John Park';
+    // name = 'John Park';
     notifyListeners();
   }
 }
@@ -280,7 +298,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.watch<storeData>().name),
+        title: Text(context.watch<anotherData>().name),
       ),
       body: Row(
         // 강의 해답
@@ -296,6 +314,12 @@ class Profile extends StatelessWidget {
               context.read<storeData>().changeFollower();
             },
             child: Text('팔로우'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<storeData>().getData();
+            },
+            child: Text('사진 가져오기'),
           ),
         ],
       ),
