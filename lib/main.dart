@@ -261,7 +261,7 @@ class storeData extends ChangeNotifier {
       follower++;
       followState = false;
     } else {
-      follower = 0;
+      follower--;
       followState = true;
     }
     notifyListeners();
@@ -282,17 +282,38 @@ class Profile extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.watch<storeData>().name),
       ),
-      body: ListTile(
-        leading: Icon(Icons.account_circle_outlined),
-        title: Text(
-            '팔로워 ' + context.watch<storeData>().follower.toString() + ' 명'),
-        trailing: ElevatedButton(
-          onPressed: () {
-            context.read<storeData>().changeFollower();
-          },
-          child: Text('팔로잉'),
-        ),
+      body: Row(
+        // 강의 해답
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.grey,
+          ),
+          Text('팔로워 ${context.watch<storeData>().follower}명'),
+          ElevatedButton(
+            onPressed: () {
+              context.read<storeData>().changeFollower();
+            },
+            child: Text('팔로우'),
+          ),
+        ],
       ),
+
+      // 내가 한 숙제
+      // ListTile(
+      //   leading: Icon(Icons.account_circle_outlined),
+      //   title: Text(
+      //       '팔로워 ' + context.watch<storeData>().follower.toString() + ' 명'),
+      //   trailing: ElevatedButton(
+      //     onPressed: () {
+      //       context.read<storeData>().changeFollower();
+      //     },
+      //     child: Text('팔로잉'),
+      //   ),
+      // ),
+
+      // 강의 내용
       // Column(
       //   children: [
       //     ElevatedButton(
