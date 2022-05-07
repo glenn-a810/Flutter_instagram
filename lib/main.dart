@@ -297,56 +297,103 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.watch<anotherData>().name),
-      ),
-      body: Row(
+        appBar: AppBar(
+          title: Text(context.watch<anotherData>().name),
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: ProfileHeader(),
+            ),
+            SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                  (c, i) => Container(
+                        color: Colors.red,
+                      ),
+                  childCount: 3),
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            )
+          ],
+        )
         // 강의 해답
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.grey,
-          ),
-          Text('팔로워 ${context.watch<storeData>().follower}명'),
-          ElevatedButton(
-            onPressed: () {
-              context.read<storeData>().changeFollower();
-            },
-            child: Text('팔로우'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              context.read<storeData>().getData();
-            },
-            child: Text('사진 가져오기'),
-          ),
-        ],
-      ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //   children: [
+        //     CircleAvatar(
+        //       radius: 30,
+        //       backgroundColor: Colors.grey,
+        //     ),
+        //     Text('팔로워 ${context.watch<storeData>().follower}명'),
+        //     ElevatedButton(
+        //       onPressed: () {
+        //         context.read<storeData>().changeFollower();
+        //       },
+        //       child: Text('팔로우'),
+        //     ),
+        //     ElevatedButton(
+        //       onPressed: () {
+        //         context.read<storeData>().getData();
+        //       },
+        //       child: Text('사진 가져오기'),
+        //     ),
+        //   ],
+        // ),
 
-      // 내가 한 숙제
-      // ListTile(
-      //   leading: Icon(Icons.account_circle_outlined),
-      //   title: Text(
-      //       '팔로워 ' + context.watch<storeData>().follower.toString() + ' 명'),
-      //   trailing: ElevatedButton(
-      //     onPressed: () {
-      //       context.read<storeData>().changeFollower();
-      //     },
-      //     child: Text('팔로잉'),
-      //   ),
-      // ),
+        // 내가 한 숙제
+        // ListTile(
+        //   leading: Icon(Icons.account_circle_outlined),
+        //   title: Text(
+        //       '팔로워 ' + context.watch<storeData>().follower.toString() + ' 명'),
+        //   trailing: ElevatedButton(
+        //     onPressed: () {
+        //       context.read<storeData>().changeFollower();
+        //     },
+        //     child: Text('팔로잉'),
+        //   ),
+        // ),
 
-      // 강의 내용
-      // Column(
-      //   children: [
-      //     ElevatedButton(
-      //         onPressed: () {
-      //           context.read<storeData>().changeName();
-      //         },
-      //         child: Text('Name Change'))
-      //   ],
-      // ),
+        // 강의 내용
+        // Column(
+        //   children: [
+        //     ElevatedButton(
+        //         onPressed: () {
+        //           context.read<storeData>().changeName();
+        //         },
+        //         child: Text('Name Change'))
+        //   ],
+        // ),
+        );
+  }
+}
+
+class ProfileHeader extends StatelessWidget {
+  const ProfileHeader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      // 강의 해답
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        CircleAvatar(
+          radius: 30,
+          backgroundColor: Colors.grey,
+        ),
+        Text('팔로워 ${context.watch<storeData>().follower}명'),
+        ElevatedButton(
+          onPressed: () {
+            context.read<storeData>().changeFollower();
+          },
+          child: Text('팔로우'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            context.read<storeData>().getData();
+          },
+          child: Text('사진 가져오기'),
+        ),
+      ],
     );
   }
 }
