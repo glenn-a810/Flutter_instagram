@@ -92,7 +92,8 @@ class _MyAppState extends State<MyApp> {
       floatingActionButton: FloatingActionButton(
         child: Text('!'),
         onPressed: () {
-          showNotification();
+          // showNotification();
+          showNotification2();
         },
       ),
       appBar: AppBar(
