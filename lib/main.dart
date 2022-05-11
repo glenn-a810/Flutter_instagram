@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram/notification.dart';
+import 'package:instagram/shop.dart';
 import 'package:instagram/style.dart' as style;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -137,7 +138,7 @@ class _MyAppState extends State<MyApp> {
           resData: resData,
           addData: addData,
         ),
-        Text('SHOP')
+        Shop()
       ][tab],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
