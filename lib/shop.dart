@@ -15,7 +15,7 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   getData() async {
     try {
-      // var res = await firestore.collection('product').get();
+      await firestore.collection('product').get();
       // await firestore
       //     .collection('product')
       //     .add({'name': '허라취', 'price': 138000});
@@ -32,8 +32,8 @@ class _ShopState extends State<Shop> {
       // res.user?.updateDisplayName('루이'); // ?.은 없으면 null, 있으면 사용하는 삼항연산자 축약어, !.은 null check 무시
 
       // user 로그인
-      await auth.signInWithEmailAndPassword(
-          email: 'test@test.com', password: 'test1234');
+      // await auth.signInWithEmailAndPassword(
+      //     email: 'test@test.com', password: 'test1234');
 
       // user 로그아웃
       // await auth.signOut();
