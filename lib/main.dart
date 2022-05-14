@@ -96,6 +96,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // MediaQuery.of(context).size.width; // 현재 디바이스의 가로 사이즈(LP단위, 1cm = 38LP)
+    // MediaQuery.of(context).size.height; // 현재 디바이스의 세로 사이즈
+    // MediaQuery.of(context).devicePixelRatio; // 1LP에 몇 px이 들어가는지. 고해상도 기기일수록 3이상 커짐
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Text('!'),
@@ -258,9 +262,12 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
-              Text('좋아요 ' + widget.resData[i]['likes'].toString()),
+              // Text('좋아요 ' + widget.resData[i]['likes'].toString()),
+              Text('종아요 ${widget.resData[i]['likes']}'),
               Text(widget.resData[i]['date']),
-              Text(widget.resData[i]['content']),
+              Text(
+                widget.resData[i]['content'],
+              ),
             ],
           );
         },
