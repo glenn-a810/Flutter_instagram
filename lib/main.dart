@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:get/get.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (c) => anotherData()),
     ],
     // create: (c) => storeData(),
-    child: MaterialApp(
+    child: GetMaterialApp(
       theme: style.theme,
       home: MyApp(),
     ),
